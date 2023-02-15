@@ -1,7 +1,9 @@
 import Avatar from '@/components/Avatar'
 import { ChatGPTLogo, PlusIcon, SendIcon } from '@/components/Icons'
 import { TypingEffect } from '@/components/TypingEffect'
+import { useMessageStore } from '@/store/messages'
 import Head from 'next/head'
+import { useRef } from 'react'
 
 function Layout({ children }) {
   return (
@@ -57,18 +59,7 @@ function Messsage({ ia, message }) {
 }
 
 function Chat() {
-  const messages = [
-    {
-      id: 1,
-      ia: false,
-      message: 'soy sho'
-    },
-    {
-      id: 2,
-      ia: true,
-      message: 'es el ia KJASFKSDFKSDJFKSJFKSDJF'
-    }
-  ]
+  const messages = useMessageStore((state) => state.messages)
 
   return (
     <div className='flex flex-col h-full flex-1 pl-64'>
@@ -83,11 +74,48 @@ function Chat() {
 }
 
 function ChatForm() {
+  const sendPrompt = useMessageStore((state) => state.sendPrompt)
+  const textAreaRef = useRef()
+
+  const handleSubmit = (event) => {
+    event?.preventDefault()
+    const { value } = textAreaRef.current
+    console.log({ value })
+    sendPrompt({ prompt: value })
+    textAreaRef.current.value = ''
+  }
+
+  const handleChange = () => {
+    const el = textAreaRef.current
+
+    el.style.height = '0px'
+    const scrollHeight = el.scrollHeight
+    el.style.height = scrollHeight + 'px'
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSubmit()
+    }
+  }
   return (
     <section className='absolute bottom-0 w-full left-0 right-0 ml-32'>
-      <form className='flex flex-row max-w-3xl pt-6 m-auto mb-6'>
+      <form
+        onSubmit={handleSubmit}
+        onKeyDown={handleKeyDown}
+        className='flex flex-row max-w-3xl pt-6 m-auto mb-6'
+      >
         <div className='relative flex flex-col flex-grow w-full px-4 py-3 text-white border rounded-md shadow-lg bg-gptlightgray border-gray-900/50'>
-          <textarea className='w-full h-[24px] resize-none bg-transparent m-0 border-0 outline-none' />
+          <textarea
+            ref={textAreaRef}
+            rows={1}
+            tabIndex={0}
+            autoFocus
+            defaultValue=''
+            onChange={handleChange}
+            className='w-full h-[24px] resize-none bg-transparent m-0 border-0 outline-none'
+          />
           <button
             type='submit'
             className='absolute p-1 rounded-md bottom-2.5 right-2.5'
