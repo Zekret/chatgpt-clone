@@ -1,8 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {}
+    extend: {
+      colors: {
+        gptlogo: '#10a37f',
+        gptdarkgray: '#202123',
+        gotgray: '#343541',
+        gptlightgray: '#444654'
+      }
+    }
   },
   plugins: []
 }
