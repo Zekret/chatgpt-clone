@@ -30,5 +30,5 @@ export const TypingEffect = ({ text }) => {
     return () => clearInterval(intervalId)
   }, [text, currentIndex])
 
-  return <span>{displayText}</span>
+  return <span className={`${showCursor ? 'after:content-["▋"] after:ml-1 after:animate-typing' : ''}`}>{displayText}</span>
 }
