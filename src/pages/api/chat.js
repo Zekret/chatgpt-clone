@@ -1,4 +1,4 @@
-const OPENAI_API_KEY = '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'
+const OPENAI_API_KEY = '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'
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
