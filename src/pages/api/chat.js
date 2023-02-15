@@ -10,7 +10,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('antes de la response')
     const response = await fetch('https://api.openai.com/v1/completions', {
       method: 'POST',
       headers: {
@@ -31,15 +30,12 @@ export default async function handler(req, res) {
     console.log('antes del check')
 
     if (!response.ok) {
-      console.error(response.statusText)
       return res.status(500).json({ error: 'OpenAI API error' })
     }
 
     console.log('despues del check')
 
     const json = await response.json()
-
-    console.log(json)
 
     return res.status(200).json({ response: json.choices[0].text.trim() })
   } catch (e) {
