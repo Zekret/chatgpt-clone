@@ -1,5 +1,5 @@
 import Avatar from '@/components/Avatar'
-import { PlusIcon } from '@/components/Icons'
+import { ChatGPTLogo, PlusIcon, SendIcon } from '@/components/Icons'
 import Head from 'next/head'
 
 function Layout({ children }) {
@@ -29,16 +29,21 @@ function Aside() {
   )
 }
 
+function UserAvatar() {
+  return (
+    <img
+      src='https://somoskudasai.com/wp-content/uploads/2022/11/portada_bocchi-the-rock-8.jpg'
+      alt='foto bochi'
+    />
+  )
+}
+
 function Messsage({ ia, message }) {
+  const avatar = ia ? <ChatGPTLogo /> : <UserAvatar />
   return (
     <div className={`text-gray-100 ${ia ? 'bg-gptlightgray' : 'bg-gptgray'}`}>
       <article className='flex gap-6 p-4 m-auto max-w-3xl'>
-        <Avatar>
-          <img
-            src='https://somoskudasai.com/wp-content/uploads/2022/11/portada_bocchi-the-rock-8.jpg'
-            alt='foto bochi'
-          />
-        </Avatar>
+        <Avatar>{avatar}</Avatar>
         <div className='min-h-[20px] flex flex-1 flex-col items-start gap-4 whitespace-pre-wrap'>
           <div className='prose-invert w-full break-words'>
             <p>{message}</p>
@@ -78,11 +83,14 @@ function Chat() {
 function ChatForm() {
   return (
     <section className='absolute bottom-0 w-full left-0 right-0 ml-32'>
-      <form className='flex flex-row max-w-3xl pt-6 m-auto'>
+      <form className='flex flex-row max-w-3xl pt-6 m-auto mb-6'>
         <div className='relative flex flex-col flex-grow w-full px-4 py-3 text-white border rounded-md shadow-lg bg-gptlightgray border-gray-900/50'>
           <textarea className='w-full h-[24px] resize-none bg-transparent m-0 border-0 outline-none' />
-          <button className='absolute p-1 rounded-md bottom-2 right-2'>
-            Enviar
+          <button
+            type='submit'
+            className='absolute p-1 rounded-md bottom-2.5 right-2.5'
+          >
+            <SendIcon />
           </button>
         </div>
       </form>
