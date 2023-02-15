@@ -1,5 +1,6 @@
 import Avatar from '@/components/Avatar'
 import { ChatGPTLogo, PlusIcon, SendIcon } from '@/components/Icons'
+import { TypingEffect } from '@/components/TypingEffect'
 import Head from 'next/head'
 
 function Layout({ children }) {
@@ -40,13 +41,14 @@ function UserAvatar() {
 
 function Messsage({ ia, message }) {
   const avatar = ia ? <ChatGPTLogo /> : <UserAvatar />
+  const textElement = ia ? <TypingEffect text={message} /> : message
   return (
     <div className={`text-gray-100 ${ia ? 'bg-gptlightgray' : 'bg-gptgray'}`}>
       <article className='flex gap-6 p-4 m-auto max-w-3xl'>
         <Avatar>{avatar}</Avatar>
         <div className='min-h-[20px] flex flex-1 flex-col items-start gap-4 whitespace-pre-wrap'>
           <div className='prose-invert w-full break-words'>
-            <p>{message}</p>
+            <p>{textElement}</p>
           </div>
         </div>
       </article>
@@ -64,7 +66,7 @@ function Chat() {
     {
       id: 2,
       ia: true,
-      message: 'es el ia'
+      message: 'es el ia KJASFKSDFKSDJFKSJFKSDJF'
     }
   ]
 
