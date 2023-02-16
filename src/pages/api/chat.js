@@ -1,5 +1,3 @@
-const OPENAI_API_KEY = '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'
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
@@ -14,7 +12,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${OPENAI_API_KEY}`
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
       },
       body: JSON.stringify({
         model: 'text-davinci-003',
